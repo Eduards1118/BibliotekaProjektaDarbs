@@ -1,98 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="lv">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Sistēmas vadība</title>
 </head>
 <body>
-    <div class="admin-header">
+    <header class="admin-header">
         <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
-            <h2>🛠️ Sistēmas vadība</h2>
-            <div style="display:flex; align-items:center; gap:20px;">
-                <a href="/" style="color: white; text-decoration:none;">Atpakaļ</a>
-                <a href="/admin/logout" style="color: #fb7185; text-decoration:none; font-weight:bold;">Iziet</a>
-            </div>
+            <h2>🛠️ Vadība</h2>
+            <nav>
+                <a href="/" style="color:white; text-decoration:none; margin-right:20px;">Sākums</a>
+                <a href="/logout" style="color:#fb7185; text-decoration:none; font-weight:bold;">Iziet</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container admin-grid">
+        <div class="admin-section">
+            <h3>+ Jauna grāmata</h3>
+            <form action="/admin/add" method="POST" enctype="multipart/form-data">
+                <input type="text" name="t" placeholder="Nosaukums" required>
+                <input type="text" name="a" placeholder="Autors" required>
+                <textarea name="c" placeholder="Saturs..." rows="5"></textarea>
+                <label>Vāka attēls:</label>
+                <input type="file" name="image">
+                <button type="submit" class="btn-admin" style="width:100%; margin-top:15px;">Saglabāt</button>
+            </form>
+        </div>
+
+        <div class="admin-section">
+            <h3>👥 Lietotāji</h3>
+            <form method="GET" style="display:flex; gap:5px; margin-bottom:15px;">
+                <input type="text" name="search_user" placeholder="Meklēt lietotāju..." value="{{ request.args.get('search_user', '') }}" style="flex:1; padding:8px; border-radius:8px; border:1px solid #ddd;">
+                <button type="submit" class="btn-search" style="padding:0 10px;">🔍</button>
+            </form>
+            <table class="admin-table">
+                <thead><tr><th>Vārds</th><th>Logins</th><th></th></tr></thead>
+                <tbody>
+                    {% for u in users %}
+                    <tr>
+                        <td>{{ u.vards }} {{ u.uzvards }}</td>
+                        <td>{{ u.login }}</td>
+                        <td style="text-align:right;">
+                            <a href="/admin/edit_user/{{u.id}}" class="action-btn btn-edit">Labot</a>
+                            <a href="/admin/delete_user/{{u.id}}" class="action-btn btn-delete" onclick="return confirm('Dzēst?')">X</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div class="container">
-        <div class="admin-grid">
-            <div class="admin-section">
-                <h3 style="display:flex; align-items:center; gap:10px;">
-                    <span style="color:var(--primary)">+</span> Pievienot jaunu grāmatu
-                </h3>
-                <form action="/admin/add" method="POST" enctype="multipart/form-data">
-                    <input type="text" name="t" placeholder="Grāmatas nosaukums" required>
-                    <input type="text" name="a" placeholder="Autors" required>
-                    <textarea name="c" placeholder="Īss apraksts vai saturs" rows="6"></textarea>
-
-                    <div style="margin: 15px 0; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px dashed #cbd5e1;">
-                        <label style="font-size:13px; color:#64748b; display:block; margin-bottom:8px;">Vāka attēls (JPG/PNG):</label>
-                        <input type="file" name="image" style="border:none; padding:0; margin:0;">
-                    </div>
-
-                    <button type="submit" class="btn-admin" style="width:100%">Saglabāt grāmatu</button>
-                </form>
-            </div>
-
-            <div class="admin-section">
-                <h3 style="display:flex; align-items:center; gap:10px;">
-                    <span style="color:var(--primary)">👥</span> Lietotāju pārvaldība
-                </h3>
-                <form method="GET" class="user-search">
-                    <input type="text" name="search_user" placeholder="Meklēt lietotāju..."
-                           value="{{ request.args.get('search_user', '') }}"
-                           style="margin:0; flex:1; padding:10px; border: 2px solid #f1f5f9; border-radius: 12px;">
-                    <button type="submit" class="btn-search" style="padding:0 15px;">🔍</button>
-                </form>
-
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Vārds</th>
-                            <th>Logins</th>
-                            <th style="text-align:right;">Darbības</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for u in users %}
-                        <tr>
-                            <td>{{ u.vards }} {{ u.uzvards }}</td>
-                            <td><strong>{{ u.login }}</strong></td>
-                            <td style="text-align:right;">
-                                <a href="{{ url_for('edit_user', user_id=u.id) }}" class="action-btn btn-edit">Labot</a>
-                                <a href="{{ url_for('delete_user', user_id=u.id) }}" class="action-btn btn-delete" onclick="return confirm('Dzēst lietotāju?')">Dzēst</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="admin-section" style="margin-top: 30px;">
-            <h3 style="display:flex; align-items:center; gap:10px;">
-                <span style="color:var(--primary)">📚</span> Esošās grāmatas
-            </h3>
+    <div class="container" style="margin-top: 30px;">
+        <div class="admin-section">
+            <h3>📚 Esošās grāmatas</h3>
             <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Vāks</th>
-                        <th>Nosaukums</th>
-                        <th>Autors</th>
-                        <th style="text-align:right;">Darbības</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Vāks</th><th>Nosaukums</th><th>Autors</th><th></th></tr></thead>
                 <tbody>
                     {% for b in books %}
                     <tr>
-                        <td><img src="{{ url_for('static', filename='uploads/' + b.attels) }}" style="width:40px; height:50px; object-fit:cover; border-radius:4px;"></td>
+                        <td><img src="{{ url_for('static', filename='uploads/' + b.attels) }}" style="width:40px; height:55px; object-fit:cover; border-radius:4px;"></td>
                         <td><strong>{{ b.virsraksts }}</strong></td>
                         <td>{{ b.autors }}</td>
                         <td style="text-align:right;">
                             <a href="/admin/edit_book/{{ b.id }}" class="action-btn btn-edit">Labot</a>
-                            <a href="/admin/delete_book/{{ b.id }}" class="action-btn btn-delete" onclick="return confirm('Dzēst grāmatu?')">Dzēst</a>
+                            <a href="/admin/delete_book/{{ b.id }}" class="action-btn btn-delete" onclick="return confirm('Dzēst?')">Dzēst</a>
                         </td>
                     </tr>
                     {% endfor %}

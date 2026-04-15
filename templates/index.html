@@ -2,52 +2,43 @@
 <html lang="lv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Bibliotēka — Digitālā Bibliotēka</title>
+    <title>Bibliotēka</title>
 </head>
 <body>
     <header>
         <div class="container">
             <a href="/" class="logo">📚 Bibliotēka</a>
-            <div class="nav-links">
+            <nav>
                 {% if session.u_name %}
-                    <span>Sveiki, <strong>{{ session.u_name }}</strong>!</span>
-                    <a href="/logout" style="color: var(--danger); margin-left: 15px; text-decoration: none; font-weight: 600;">Iziet</a>
+                    <span>Sveiki, <b>{{ session.u_name }}</b>!</span>
+                    <a href="/logout" style="color:var(--danger); margin-left:15px; text-decoration:none;">Iziet</a>
                 {% else %}
-                    <a href="/login" class="btn-book" style="padding: 8px 20px;">Ienākt</a>
+                    <a href="/login" class="btn-book">Ienākt</a>
                 {% endif %}
-            </div>
+            </nav>
         </div>
     </header>
-
-    <div class="container">
-        <div class="search-container" style="text-align: center; padding: 60px 0;">
-            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px;">Atklāj jaunas pasaules</h1>
-            <p style="color: #64748b; margin-bottom: 30px;">Atrodi savu nākamo grāmatu šeit</p>
-
+    <main class="container">
+        <div class="search-container">
+            <h1>Atklāj jaunas pasaules</h1>
+            <p style="color:#64748b;">Atrodi savu nākamo grāmatu šeit</p>
             <form method="GET" class="search-form">
-                <input name="search" class="search-input" placeholder="Meklēt grāmatu vai autoru..." value="{{ request.args.get('search', '') }}">
+                <input name="search" class="search-input" placeholder="Meklēt..." value="{{ request.args.get('search', '') }}">
                 <button type="submit" class="btn-search">Meklēt</button>
             </form>
         </div>
-
         <div class="grid">
             {% for b in books %}
             <div class="card">
-                <div style="overflow: hidden; height: 380px;">
-                    <img src="{{ url_for('static', filename='uploads/' + b.attels) }}" class="card-img" onerror="this.src='https://via.placeholder.com/300x450?text=Nav+Attela'">
-                </div>
+                <img src="{{ url_for('static', filename='uploads/' + b.attels) }}" class="card-img" onerror="this.src='https://via.placeholder.com/300x450'">
                 <div class="card-body">
-                    <div>
-                        <h3>{{ b.virsraksts }}</h3>
-                        <p class="author">{{ b.autors }}</p>
-                    </div>
-                    <a href="{{ url_for('view_book', book_id=b.id) }}" class="btn-book">Lasīt grāmatu</a>
+                    <div><h3>{{ b.virsraksts }}</h3><p>{{ b.autors }}</p></div>
+                    <a href="/book/{{b.id}}" class="btn-book">Lasīt</a>
                 </div>
             </div>
             {% endfor %}
         </div>
-    </div>
+    </main>
 </body>
 </html>

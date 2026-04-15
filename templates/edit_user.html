@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="lv">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -7,29 +7,24 @@
 </head>
 <body class="auth-page">
     <div class="auth-card">
-        <h2>Labot lietotāja datus</h2>
+        <h2>Lietotāja dati</h2>
         <form method="POST">
-            <label style="display:block; text-align:left; margin: 5px 0 0 5px; font-size: 12px; color: #64748b;">Vārds:</label>
+            <label>Vārds</label>
             <input type="text" name="vards" value="{{ user.vards }}" required>
-
-            <label style="display:block; text-align:left; margin: 5px 0 0 5px; font-size: 12px; color: #64748b;">Uzvārds:</label>
+            <label>Uzvārds</label>
             <input type="text" name="uzvards" value="{{ user.uzvards }}" required>
-
-            <label style="display:block; text-align:left; margin: 5px 0 0 5px; font-size: 12px; color: #64748b;">Logins:</label>
+            <label>Logins</label>
             <input type="text" name="login" value="{{ user.login }}" required>
-
-            <label style="display:block; text-align:left; margin: 5px 0 0 5px; font-size: 12px; color: #64748b;">Jaunā parole:</label>
-            <input type="text" name="parole" value="{{ user.parole }}" placeholder="Ievadiet jaunu paroli" required>
-
-            <label style="display:block; text-align:left; margin: 10px 0 5px 5px; font-size: 12px; color: #64748b;">Loma:</label>
-            <select name="role" style="width:100%; padding:12px; border-radius:12px; border:2px solid #e2e8f0; margin-bottom:20px;">
+            <label>Parole</label>
+            <input type="text" name="parole" value="{{ user.parole }}" required>
+            <label>Loma</label>
+            <select name="role">
                 <option value="student" {% if user.role == 'student' %}selected{% endif %}>Students</option>
                 <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admins</option>
             </select>
-
-            <button type="submit" class="btn-book" style="width:100%">Saglabāt visas izmaiņas</button>
-            <a href="/admin" style="display:block; margin-top:15px; text-decoration:none; color:gray;">Atcelt</a>
+            <button type="submit" class="btn-book">Saglabāt</button>
         </form>
+        <a href="/admin">Atcelt</a>
     </div>
 </body>
 </html>
