@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+    <div class="container" style="max-width:600px; margin-top:50px;">
+        <div style="background:white; padding:40px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.05);">
+            <h2>➕ Pievienot jaunu grāmatu</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <input name="title" placeholder="Grāmatas nosaukums" required style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+                <input name="author" placeholder="Autors" required style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+                <input name="genre" placeholder="Žanrs" style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+                <textarea name="content" placeholder="Grāmatas pilnais teksts..." rows="8" style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea>
+                <label>Vāka attēls:</label>
+                <input type="file" name="image" style="margin-bottom:20px;">
+                <button type="submit" class="btn btn-main">Saglabāt grāmatu</button>
+            </form>
+            <br><a href="/admin" style="color:gray;">← Atpakaļ</a>
+        </div>
+    </div>
+</body>
+</html>

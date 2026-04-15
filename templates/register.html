@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Reģistrācija</title>
+</head>
+<body class="auth-page">
+    <div class="auth-card">
+        <h2>Reģistrācija</h2>
+
+        {% with msgs = get_flashed_messages() %}
+            {% if msgs %}
+                {% for m in msgs %}
+                    <p class="status-badge" style="background:#fee2e2; color:#991b1b; margin-bottom:15px;">{{m}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="admin-section" style="box-shadow: none; padding: 0;">
+                <input type="text" name="vards" placeholder="Vārds" required>
+                <input type="text" name="uzvards" placeholder="Uzvārds" required>
+                <input type="text" name="login" placeholder="Izdomājiet lietotājvārdu" required>
+                <input type="password" name="parole" placeholder="Parole" required>
+                <input type="password" name="parole2" placeholder="Atkārtojiet paroli" required>
+                <button type="submit" class="btn-book" style="width: 100%; margin-top: 10px;">Izveidot kontu</button>
+            </div>
+        </form>
+
+        <div class="auth-footer">
+            <a href="/login">Jau ir konts? Ienākt</a>
+        </div>
+    </div>
+</body>
+</html>

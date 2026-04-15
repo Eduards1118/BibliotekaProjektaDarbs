@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ book.virsraksts }}</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo">📚 Atpakaļ uz bibliotēku</a>
+        </div>
+    </header>
+
+    <div class="container" style="max-width: 800px; margin-top: 40px;">
+        <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <img src="{{ url_for('static', filename='uploads/' + book.attels) }}" style="width: 200px; border-radius: 10px;">
+                <h1 style="margin-top: 20px;">{{ book.virsraksts }}</h1>
+                <p style="color: #6366f1; font-weight: bold;">Autors: {{ book.autors }}</p>
+            </div>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+            <div style="line-height: 1.8; font-size: 1.1rem; color: #333; white-space: pre-wrap;">
+                {{ book.saturs }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

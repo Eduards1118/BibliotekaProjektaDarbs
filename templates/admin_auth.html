@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>🔒 Admin Ieeja</title>
+</head>
+<body class="auth-page" style="background: #0f172a;">
+    <div class="auth-card" style="background: rgba(30, 41, 59, 0.9); border: 1px solid #334155;">
+        <div style="font-size: 50px; margin-bottom: 20px;">🔐</div>
+        <h2 style="color: white;">Sistēmas piekļuve</h2>
+        {% with msgs = get_flashed_messages() %}
+            {% for m in msgs %}<p style="color: #fb7185;">{{m}}</p>{% endfor %}
+        {% endwith %}
+        <form method="POST">
+            <input name="admin_pass" type="password" placeholder="Admina parole"
+                   style="background: #334155; border: none; color: white;" required>
+            <button type="submit" class="btn-book" style="width: 100%; margin-top: 20px;">Ieiet panelī</button>
+        </form>
+        <p style="margin-top: 20px;"><a href="/" style="color: #94a3b8; text-decoration: none;">← Atpakaļ</a></p>
+    </div>
+</body>
+</html>

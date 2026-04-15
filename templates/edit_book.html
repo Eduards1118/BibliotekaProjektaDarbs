@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Labot grāmatu</title>
+</head>
+<body class="auth-page">
+    <div class="auth-card" style="max-width: 600px;">
+        <h2>Labot grāmatu</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="admin-section" style="box-shadow: none; padding: 0;">
+                <label>Nosaukums</label>
+                <input type="text" name="t" value="{{ book.virsraksts }}" required>
+
+                <label>Autors</label>
+                <input type="text" name="a" value="{{ book.autors }}" required>
+
+                <label>Apraksts / Saturs</label>
+                <textarea name="c" rows="8" style="width:100%; border-radius:12px; padding:10px; border:2px solid #f1f5f9;">{{ book.saturs }}</textarea>
+
+                <div style="margin: 15px 0; text-align: left;">
+                    <label>Pašreizējais attēls: {{ book.attels }}</label>
+                    <input type="file" name="image">
+                </div>
+
+                <button type="submit" class="btn-book" style="width: 100%;">Saglabāt izmaiņas</button>
+            </div>
+        </form>
+        <div class="auth-footer">
+            <a href="/admin">Atcelt un atpakaļ</a>
+        </div>
+    </div>
+</body>
+</html>
