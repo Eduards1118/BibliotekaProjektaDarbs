@@ -1,0 +1,40 @@
+DROP DATABASE IF EXISTS biblioteka1;
+CREATE DATABASE biblioteka1;
+USE biblioteka1;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    vards VARCHAR(50),
+    uzvards VARCHAR(50),
+    login VARCHAR(50) UNIQUE,
+    parole VARCHAR(50),
+    role ENUM('student', 'teacher', 'admin') DEFAULT 'student'
+);
+
+CREATE TABLE books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    virsraksts VARCHAR(255),
+    autors VARCHAR(255),
+    zanrs VARCHAR(100),
+    saturs LONGTEXT,
+    attels VARCHAR(255) DEFAULT 'default_book.jpg'
+);
+
+-- Пароль для админа: admin123
+INSERT INTO users (vards, uzvards, login, parole, role) 
+VALUES ('Administrators', 'Sistema', 'admin', '1234', 'admin');
+SELECT * FROM users
+
+INSERT INTO books (virsraksts, autors, zanrs, saturs, attels) VALUES 
+('Zem degošām debesīm', 'Jānis Bērziņš', 'Vēsturiskais romāns', 'Stāsts par drosmi un mīlestību Otrā pasaules kara laikā, kur galvenie varoņi cīnās par izdzīvošanu un savas dzimtenes brīvību.', 'book1.jpg'),
+
+('Mākslīgais intelekts: Nākotne', 'Anna Kalniņa', 'Zinātne', 'Padziļināts pētījums par to, kā AI mainīs mūsu ikdienu, darba tirgu un sabiedrību nākamajos desmit gados.', 'book2.jpg'),
+
+('Rīgas detektīvs', 'Mārtiņš Ozols', 'Kriminālromāns', 'Sarežģīts noziegums pašā Rīgas sirdī. Izmeklētājs Andrejs mēģina atšķetināt noslēpumu, kas saistīts ar senu pilsētas leģendu.', 'book3.jpg'),
+
+('Klusuma spēks', 'Ieva Liepiņa', 'Pašizaugsme', 'Praktiski padomi un meditācijas tehnikas, kas palīdz atrast iekšējo mieru mūsdienu steidzīgajā un trokšņainajā pasaulē.', 'book4.jpg'),
+
+('Zvaigžņu ceļotāji', 'Kārlis Zariņš', 'Zinātniskā fantastika', 'Tālas nākotnes vīzija, kur cilvēce ir kolonizējusi Marsu un dodas pirmajā starpgalaktiku ceļojumā, lai meklētu jaunas mājas.', 'book5.jpg');
+
+-- Pārbaudām rezultātu
+SELECT * FROM books;
