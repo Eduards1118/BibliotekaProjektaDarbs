@@ -10,7 +10,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
 
-# Palīgfunkcija datubāzes pieprasījumiem
+
 def query_db(query, args=(), one=False, commit=False):
     conn = mysql.connector.connect(host="localhost", user="root", password="Klase12!", database="biblioteka1")
     cur = conn.cursor(dictionary=True)
@@ -65,7 +65,7 @@ def register():
     return render_template('register.html')
 
 
-# --- ADMIN SEKCIJA ---
+
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin_panel():
@@ -82,7 +82,7 @@ def admin_panel():
     return render_template('admin_auth.html')
 
 
-# Grāmatu pārvaldība
+
 @app.route('/admin/add', methods=['POST'])
 def add_book():
     if not session.get('admin_access'): return redirect('/admin')
